@@ -31,8 +31,9 @@ defineProps({
       <button
           class="bg-green-400 p-2 rounded-md ml-auto"
           v-if="movieStore.activeTab === 'favorites'"
+          @click="movieStore.toggleToWatched(movie)"
       >
-        {{ !movie.isFavorite === true ? 'Add to favorites' : 'Remove from favorites' }}
+        {{ movie.isWatched === true ? 'Watched' : 'Not watched' }}
       </button>
     </div>
   </div>

@@ -6,6 +6,7 @@ export const useMovieStore = defineStore('movieStore', {
             activeTab: 'search',
             movieTitle: '',
             sortValue: 'popular',
+            favoritesSortValue: 'favorites',
             movies: null,
             api_options: {
                 method: 'GET',
@@ -26,6 +27,7 @@ export const useMovieStore = defineStore('movieStore', {
                     return {
                         ...movie,
                         isFavorite: false,
+                        isWatched: false,
                     }
                 })
                 return data
@@ -39,8 +41,11 @@ export const useMovieStore = defineStore('movieStore', {
         },
 
         toggleToFavorites(movie) {
-            console.log(movie)
             movie.isFavorite = !movie.isFavorite
+        },
+
+        toggleToWatched(movie) {
+            movie.isWatched = !movie.isWatched
         }
     },
 
@@ -56,7 +61,13 @@ export const useMovieStore = defineStore('movieStore', {
             }
         },
         favoritesMovies: (state) => {
-            return state.movies?.results?.filter((movie) => movie.isFavorite)
+            if (state.favoritesSortValue === 'favorites') {
+                return state.movies?.results?.filter((movie) => movie.isFavorite)
+            } else if (state.favoritesSortValue === 'watched') {
+                return state.movies?.results.filter((movie) => movie.isFavorite && movie.isWatched)
+            } else if (state.favoritesSortValue === 'not-watched') {
+                return state.movies?.results.filter((movie) => movie.isFavorite && !movie.isWatched)
+            }
         }
     }
 })

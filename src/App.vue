@@ -25,7 +25,7 @@ const classObj = computed(() => (tab) => ({
       >Favorites
       </button>
       <button
-          class="bg-green-400 p-3 rounded-md"
+          class="bg-gray-400 p-3 rounded-md"
           :class="classObj('search')"
           @click="movieStore.activeTab = 'search'"
       >Search
