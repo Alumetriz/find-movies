@@ -1,4 +1,8 @@
 <script setup>
+import {useMovieStore} from "../stores/MovieStore.js";
+
+const movieStore = useMovieStore()
+
 defineProps({
   movie: {
     type: Object,
@@ -17,7 +21,19 @@ defineProps({
         <span class="text-center font-semibold text-2xl">({{ movie.release_date }})</span>
       </div>
       <p class="text-center font-normal text-lg">{{ movie.overview }}</p>
-      <button class="bg-green-400 p-2 rounded-md ml-auto">Add to favorites</button>
+      <button
+          class="bg-green-400 p-2 rounded-md ml-auto"
+          :class="{'bg-red-400': movie.isFavorite}"
+          @click="movieStore.toggleToFavorites(movie)"
+      >
+        {{ !movie.isFavorite === true ? 'Add to favorites' : 'Remove from favorites' }}
+      </button>
+      <button
+          class="bg-green-400 p-2 rounded-md ml-auto"
+          v-if="movieStore.activeTab === 'favorites'"
+      >
+        {{ !movie.isFavorite === true ? 'Add to favorites' : 'Remove from favorites' }}
+      </button>
     </div>
   </div>
 </template>

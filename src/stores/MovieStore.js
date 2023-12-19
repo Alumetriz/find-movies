@@ -37,6 +37,11 @@ export const useMovieStore = defineStore('movieStore', {
         async fetchMovies() {
             this.movies = await this.fetchMovie(this.movieTitle)
         },
+
+        toggleToFavorites(movie) {
+            console.log(movie)
+            movie.isFavorite = !movie.isFavorite
+        }
     },
 
     getters: {
@@ -49,6 +54,9 @@ export const useMovieStore = defineStore('movieStore', {
                     ? sortedMovies.sort((a, b) => b.popularity - a.popularity)
                     : sortedMovies.sort((a, b) => a.popularity - b.popularity)
             }
+        },
+        favoritesMovies: (state) => {
+            return state.movies?.results?.filter((movie) => movie.isFavorite)
         }
     }
 })
