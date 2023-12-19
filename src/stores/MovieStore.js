@@ -4,7 +4,8 @@ export const useMovieStore = defineStore('movieStore', {
     state: () => {
         return {
             movieTitle: '',
-            movies: [],
+            sortValue: 'popular',
+            movies: null,
             api_options: {
                 method: 'GET',
                 headers: {
@@ -30,6 +31,19 @@ export const useMovieStore = defineStore('movieStore', {
 
         async fetchMovies() {
             this.movies = await this.fetchMovie(this.movieTitle)
+        },
+    },
+
+    getters: {
+        filteredMovies: (state) => {
+            if (!state.movies) return [];
+            else {
+                const sortedMovies = [...state.movies.results]
+                console.log(state.movies)
+                return state.sortValue === 'popular'
+                    ? sortedMovies.sort((a, b) => b.popularity - a.popularity)
+                    : sortedMovies.sort((a, b) => a.popularity - b.popularity)
+            }
         }
     }
 })

@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+import {useMovieStore} from "./stores/MovieStore.js";
+
+const movieStore = useMovieStore()
+</script>
 
 <template>
   <header class="mb-3">
@@ -12,9 +16,12 @@
     </section>
 
     <section class="container mx-auto flex flex-col gap-6 items-center mt-6">
-      <the-search></the-search>
+      <div class="flex gap-6">
+        <filter-movies></filter-movies>
+        <the-search></the-search>
+      </div>
 
-      <movies-list></movies-list>
+      <movies-list v-if="movieStore.movies"></movies-list>
     </section>
   </main>
 </template>
