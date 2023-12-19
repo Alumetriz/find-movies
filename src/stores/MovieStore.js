@@ -3,26 +3,33 @@ import {defineStore} from "pinia";
 export const useMovieStore = defineStore('movieStore', {
     state: () => {
         return {
-            movies: [
-                // {
-                //     id: 1,
-                //     original_title: "Spider-Man",
-                //     overview:
-                //         "After being bitten by a genetically altered spider at Oscorp, nerdy but endearing high school student Peter Parker is endowed with amazing powers to become the superhero known as Spider-Man.",
-                //     poster_path: "/gh4cZbhZxyTbgxQPxD0dOudNPTn.jpg",
-                //     release_date: "2002-05-01",
-                //     isWatched: false,
-                // },
-                // {
-                //     id: 2,
-                //     original_title: "The Batman",
-                //     overview:
-                //         "In his second year of fighting crime, Batman uncovers corruption in Gotham City that connects to his own family while facing a serial killer known as the Riddler.",
-                //     poster_path: "/b0PlSFdDwbyK0cf5RxwDpaOJQvQ.jpg",
-                //     release_date: "2022-03-01",
-                //     isWatched: false,
-                // },
-            ]
+            movieTitle: '',
+            movies: [],
+            api_options: {
+                method: 'GET',
+                headers: {
+                    accept: 'application/json',
+                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZGUzY2ZmMTEyNjI3ZjdlYzBkNGZhZGQ1ZGM1MGUwYyIsInN1YiI6IjY1ODA4YWYxZDUxOTFmMDYwNmFkODJiZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.kjFa056Ks9OvMs_Y_ML4nc8NOIdx7CweaDoUMqUlGsA'
+                }
+            }
+        }
+    },
+    actions: {
+        async fetchMovie(title) {
+            const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${title}&include_adult=false&language=en-US&page=1`, this.api_options)
+            const data = await response.json()
+
+            data.results = data.results.map((movie) => {
+                return {
+                    ...movie,
+                    isFavorite: false,
+                }
+            })
+            return data
+        },
+
+        async fetchMovies() {
+            this.movies = await this.fetchMovie(this.movieTitle)
         }
     }
 })

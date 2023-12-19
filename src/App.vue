@@ -1,10 +1,4 @@
-<script setup>
-import {useMovieStore} from "./stores/MovieStore.js";
-
-const movieStore = useMovieStore()
-
-
-</script>
+<script setup></script>
 
 <template>
   <header class="mb-3">
