@@ -3,6 +3,7 @@ import {defineStore} from "pinia";
 export const useMovieStore = defineStore('movieStore', {
     state: () => {
         return {
+            activeTab: 'search',
             movieTitle: '',
             sortValue: 'popular',
             movies: null,

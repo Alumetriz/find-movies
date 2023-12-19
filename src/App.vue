@@ -1,7 +1,14 @@
 <script setup>
 import {useMovieStore} from "./stores/MovieStore.js";
+import SearchPage from "./pages/SearchPage.vue";
+import {computed} from "vue";
 
 const movieStore = useMovieStore()
+
+const classObj = computed(() => (tab) => ({
+  'bg-green-400': movieStore.activeTab === tab,
+  'cursor-not-allowed': movieStore.activeTab === tab
+}))
 </script>
 
 <template>
@@ -11,18 +18,22 @@ const movieStore = useMovieStore()
 
   <main>
     <section class="container flex justify-around mx-auto">
-      <button class="bg-gray-400 p-3 rounded-md">Favorites</button>
-      <button class="bg-green-400 p-3 rounded-md">Search</button>
+      <button
+          class="bg-gray-400 p-3 rounded-md"
+          :class="classObj('favorites')"
+          @click="movieStore.activeTab = 'favorites'"
+      >Favorites
+      </button>
+      <button
+          class="bg-green-400 p-3 rounded-md"
+          :class="classObj('search')"
+          @click="movieStore.activeTab = 'search'"
+      >Search
+      </button>
     </section>
 
-    <section class="container mx-auto flex flex-col gap-6 items-center mt-6">
-      <div class="flex gap-6">
-        <filter-movies></filter-movies>
-        <the-search></the-search>
-      </div>
-
-      <movies-list v-if="movieStore.movies"></movies-list>
-    </section>
+    <search-page v-if="movieStore.activeTab === 'search'"></search-page>
+    <favorites-page v-if="movieStore.activeTab === 'favorites'"></favorites-page>
   </main>
 </template>
 
