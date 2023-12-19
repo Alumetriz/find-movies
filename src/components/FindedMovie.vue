@@ -9,7 +9,8 @@ defineProps({
 
 <template>
   <div class="flex gap-10 p-3 bg-gray-200 rounded-md">
-    <img :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`" alt="">
+    <img v-if="movie.poster_path" :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`" alt="">
+    <img v-else src="https://via.placeholder.com/300x450" alt="">
     <div class="flex flex-col gap-6">
       <div class="flex gap-3">
         <h3 class="text-center font-bold text-3xl">{{ movie.title }}</h3>
