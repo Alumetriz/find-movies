@@ -28,7 +28,7 @@ export const useSearchStore = defineStore('searchStore', () => {
 
             const movieStore = useMovieStore()
             console.log(movieStore.movies)
-            movieStore.movies = data
+            movieStore.movies = data.results
         } catch (e) {
             console.log(e)
         } finally {
