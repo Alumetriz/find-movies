@@ -1,7 +1,9 @@
 <script setup>
 import {useMovieStore} from "../stores/MovieStore.js";
+import {useSearchStore} from "../stores/SearchStore.js";
 
 const movieStore = useMovieStore()
+const searchStore = useSearchStore()
 </script>
 
 
